@@ -3,7 +3,6 @@
 /**
  * @file
  * Views field view field handler class.
- * 
  */
 
 class views_field_view_handler_field_view extends views_handler_field {
@@ -11,7 +10,7 @@ class views_field_view_handler_field_view extends views_handler_field {
    * If query aggregation is used, all of the arguments for the child view.
    *
    * This is a multidimensional array containing field_aliases for the argument's
-   * fields and containing a linear array of all of the results to be used as 
+   * fields and containing a linear array of all of the results to be used as
    * arguments in various fields.
    */
   public $child_arguments = array();
@@ -453,12 +452,12 @@ class views_field_view_handler_field_view extends views_handler_field {
 
   /**
    * Get field values from tokens.
-   * 
+   *
    * @param string $token
    *  token string. E.g. explode(',', $this->options['args']);
    * @param View $view
    *  Full view object to get token values from.
-   * 
+   *
    * @return array
    *  An array of raw argument values, returned in the same order as the token
    *  were passed in.
@@ -581,13 +580,13 @@ class views_field_view_handler_field_view extends views_handler_field {
     $this->document_self_tokens($options[t('Fields')]);
 
     // Default text.
-    $output = '<p>' . t('You must add some additional fields to this display before using this field. 
-      These fields may be marked as <em>Exclude from display</em> if you prefer. Note that due to rendering order, 
+    $output = '<p>' . t('You must add some additional fields to this display before using this field.
+      These fields may be marked as <em>Exclude from display</em> if you prefer. Note that due to rendering order,
       you cannot use fields that come after this field; if you need a field not listed here, rearrange your fields.') . '</p>';
 
     // We have some options, so make a list.
     if (!empty($options)) {
-      $output = '<p>' . t('The following tokens are available for this field. Note that due to rendering order, 
+      $output = '<p>' . t('The following tokens are available for this field. Note that due to rendering order,
         you cannot use fields that come after this field; if you need a field that is not listed here, re-arrange your fields.') . '</p>';
 
       foreach (array_keys($options) as $type) {
@@ -605,7 +604,7 @@ class views_field_view_handler_field_view extends views_handler_field {
       }
     }
 
-    $output .= '<p><em>' . t('Using rendered (%) tokens can cause unexpected behaviour, as this will use the last output of the field. 
+    $output .= '<p><em>' . t('Using rendered (%) tokens can cause unexpected behaviour, as this will use the last output of the field.
       This could be re written output also. If no prefix is used in the token pattern, "!" will be used as a default.') . '</em></p>';
 
     return $output;
