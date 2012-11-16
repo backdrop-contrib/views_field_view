@@ -171,7 +171,7 @@ class views_field_view_handler_field_view extends views_handler_field {
 
       // Ensure we're working with a SQL view.
       $views_data = views_fetch_data($view->base_table);
-      if ($views_data['table']['base']['query class'] == 'views_query') {
+      if (isset($views_data['table']['base']['query class']) && $views_data['table']['base']['query class'] == 'views_query') {
         $form['query_aggregation']['#disabled'] = TRUE;
       }
     }
