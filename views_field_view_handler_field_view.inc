@@ -32,6 +32,13 @@ class views_field_view_handler_field_view extends views_handler_field {
   /**
    * Disable this handler from being used as a 'group by'.
    */
+  function use_group_by() {
+    return FALSE;
+  }
+
+  /**
+   * Disable this handler from being used as a 'group by' in style plugins.
+   */
   function use_string_group_by() {
     return FALSE;
   }
