@@ -152,6 +152,7 @@ class views_field_view_handler_field_view extends views_handler_field {
         '#type' => 'textfield',
         '#default_value' => $this->options['arguments'],
         '#fieldset' => 'views_field_view',
+        '#maxlength' => '256',
       );
       $form['available_tokens'] = array(
         '#type' => 'fieldset',
