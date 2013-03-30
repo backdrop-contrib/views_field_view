@@ -395,10 +395,17 @@ class views_field_view_handler_field_view extends views_handler_field {
               $start = (int) $this->query->pager->options['id'];
             }
 
+            // Set the index at 1, as we will always want this to be atleast
+            // 1 higher than the start ID.
+            $index = 1;
             // Set the pager ID before initializing the pager, so
             // views_plugin_pager::set_current_page works as expected, which is
-            // called from view::init_pager()
-            $pager['options']['id'] = $start + 1 + $this->view->row_index;
+            // called from view::init_pager(). There wont always be a row_index
+            // set so test for this.
+            if (isset($this->view->row_index)) {
+              $index += $this->view->row_index;
+            }
+            $pager['options']['id'] = $start + $index;
             $view->display_handler->set_option('pager', $pager);
             $view->init_pager();
           }
