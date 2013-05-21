@@ -395,10 +395,17 @@ class views_field_view_handler_field_view extends views_handler_field {
               $start = (int) $this->query->pager->options['id'];
             }
 
+            // Set the index at 1, as we will always want this to be atleast
+            // 1 higher than the start ID.
+            $index = 1;
             // Set the pager ID before initializing the pager, so
             // views_plugin_pager::set_current_page works as expected, which is
-            // called from view::init_pager()
-            $pager['options']['id'] = $start + 1 + $this->view->row_index;
+            // called from view::init_pager(). There wont always be a row_index
+            // set so test for this.
+            if (isset($this->view->row_index)) {
+              $index += $this->view->row_index;
+            }
+            $pager['options']['id'] = $start + $index;
             $view->display_handler->set_option('pager', $pager);
             $view->init_pager();
           }
@@ -450,9 +457,11 @@ class views_field_view_handler_field_view extends views_handler_field {
       $output = t('Recursion, stop!');
     }
 
-    if (!empty($output)) {
-      // Add the rendered output back to the $values object
-      // so it is available in $view->result objects.
+    // We only add the output to the $values object for field handlers. Area
+    // handlers will not use this.
+    if (($this->handler_type == 'field') && !empty($output)) {
+      // Add the rendered output back to the $values object so it is available
+      // in $view->result objects.
       $values->{'views_field_view_' . $this->options['id']} = $output;
     }
 
