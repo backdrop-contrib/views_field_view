@@ -30,6 +30,14 @@ class views_field_view_handler_field_view extends views_handler_field {
   public $child_view = FALSE;
 
   /**
+   * Stores a static cache of views. This will only cache views that contain no
+   * arguments.
+   *
+   * @var array
+   */
+  protected $cached = array();
+
+  /**
    * Disable this handler from being used as a 'group by'.
    */
   function use_group_by() {
@@ -355,17 +363,23 @@ class views_field_view_handler_field_view extends views_handler_field {
   }
 
   function render($values) {
+    static $running = array();
     $output = NULL;
+
     // If it's not a field handler and there are no values
     // Get the first result row from the view and use that.
     if (($this->handler_type !== 'field') && empty($values) && isset($this->view->result)) {
       $values = reset($this->view->result);
     }
 
-    static $running = array();
-    // Protect against the evil / recursion.
-    // Set the variable for yourself, this is not for the normal "user".
-    if (empty($running[$this->options['view']][$this->options['display']]) || variable_get('views_field_view_evil', FALSE)) {
+    if (empty($this->options['arguments']) && isset($this->cached[$this->options['view']][$this->options['display']])) {
+      // If there are no arguments, and we already cached this view, then
+      // our work here is done.
+      $output = $this->cached[$this->options['view']][$this->options['display']];
+    }
+    // Protect against the evil / recursion. Set the variable for yourself, this
+    // is not for the normal "user".
+    elseif (empty($running[$this->options['view']][$this->options['display']]) || variable_get('views_field_view_evil', FALSE)) {
       if ($this->options['view'] && !$this->options['query_aggregation']) {
         $running[$this->options['view']][$this->options['display']] = TRUE;
         $args = array();
@@ -455,6 +469,12 @@ class views_field_view_handler_field_view extends views_handler_field {
     }
     else {
       $output = t('Recursion, stop!');
+    }
+
+    if (empty($this->options['arguments']) && !isset($this->cached[$this->options['view']][$this->options['display']])) {
+      // If there are no arguments and no existing static cache then set a
+      // static cache for this view.
+      $this->cached[$this->options['view']][$this->options['display']] = $output;
     }
 
     // We only add the output to the $values object for field handlers. Area
