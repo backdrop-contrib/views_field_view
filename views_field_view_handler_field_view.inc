@@ -89,7 +89,8 @@ class views_field_view_handler_field_view extends views_handler_field {
 
     // If there is no view set, use the first one for now.
     if (count($view_options) && empty($this->options['view'])) {
-      $this->options['view'] = reset(array_keys($view_options));
+      $keys = array_keys($view_options);
+      $this->options['view'] = reset($keys);
     }
 
     if ($this->options['view']) {
