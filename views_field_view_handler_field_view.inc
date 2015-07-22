@@ -64,8 +64,7 @@ class views_field_view_handler_field_view extends views_handler_field {
   function options_form(&$form, &$form_state) {
     parent::options_form($form, $form_state);
 
-    $view_options = views_get_views_as_options(TRUE);
-
+    $view_options = views_get_views_as_options(TRUE, 'all', NULL, FALSE, TRUE);
     $form['views_field_view'] = array(
       '#type' => 'fieldset',
       '#title' => t("View settings"),
