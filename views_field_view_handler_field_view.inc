@@ -296,7 +296,8 @@ class views_field_view_handler_field_view extends views_handler_field {
           // so let's special case them.
           $table_name = $configured_argument['table'];
           $table_field = $configured_argument['field'];
-          $argument_views_data = views_fetch_data($table_name)[$table_field];
+          $views_data = views_fetch_data($table_name);
+          $argument_views_data = $views_data[$table_field];
           // This is the condition how we find out that we deal with a fieldapi
           // field.
           if (isset($argument_views_data['argument']['field_name'])) {
