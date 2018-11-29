@@ -79,7 +79,7 @@ class views_field_view_handler_field_view extends views_handler_field {
       '#default_value' => $this->options['view'],
       '#options' => $view_options,
       '#ajax' => array(
-        'path' => views_ui_build_form_url($form_state),
+        'path' => views_ui_build_form_path($form_state),
       ),
       '#submit' => array('views_ui_config_item_form_submit_temporary'),
       '#executes_submit_callback' => TRUE,
@@ -110,7 +110,7 @@ class views_field_view_handler_field_view extends views_handler_field {
         '#default_value' => $this->options['display'],
         '#options' => $display_options,
         '#ajax' => array(
-          'path' => views_ui_build_form_url($form_state),
+          'path' => views_ui_build_form_path($form_state),
         ),
         '#submit' => array('views_ui_config_item_form_submit_temporary'),
         '#executes_submit_callback' => TRUE,
@@ -154,8 +154,8 @@ class views_field_view_handler_field_view extends views_handler_field {
 
       $form['arguments'] = array(
         '#title' => t('Contextual filters'),
-        '#description' => t('Use a comma (,) or forwardslash (/) separated list of each contextual filter which should be forwared to the view. 
-          See below list of available replacement tokens. Static values are also be passed to child views if they do not match a token format. 
+        '#description' => t('Use a comma (,) or forwardslash (/) separated list of each contextual filter which should be forwared to the view.
+          See below list of available replacement tokens. Static values are also be passed to child views if they do not match a token format.
           You could pass static ID\'s or taxonomy terms in this way. E.g. 123 or "my taxonomy term".'),
         '#type' => 'textfield',
         '#default_value' => $this->options['arguments'],
@@ -401,7 +401,7 @@ class views_field_view_handler_field_view extends views_handler_field {
     }
     // Protect against the evil / recursion. Set the variable for yourself, this
     // is not for the normal "user".
-    elseif (empty($running[$this->options['view']][$this->options['display']]) || variable_get('views_field_view_evil', FALSE)) {
+    elseif (empty($running[$this->options['view']][$this->options['display']]) || config_get('views_field_view.settings', 'evil')) {
       if ($this->options['view'] && !$this->options['query_aggregation']) {
         $running[$this->options['view']][$this->options['display']] = TRUE;
         $args = array();
