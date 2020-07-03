@@ -59,9 +59,9 @@ https://github.com/backdrop-contrib/views_field_view/issues.
 Current Maintainers
 -------------------
 
-- Jen Lampton (https://github.com/jenlampton).
 - Graham Oliver (https://github.com/Graham-72).
-- Seeking additional maintainers
+- Jen Lampton (https://github.com/jenlampton).
+
 
 Credits
 -------
