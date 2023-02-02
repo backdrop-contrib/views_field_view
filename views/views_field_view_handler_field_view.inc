@@ -139,7 +139,7 @@ class views_field_view_handler_field_view extends views_handler_field {
           ),
           '#attached' => array(
             'css' => array(
-              drupal_get_path('module', 'views_field_view') . '/views_field_view.css',
+              backdrop_get_path('module', 'views_field_view') . '/views_field_view.css',
             ),
           ),
           '#prefix' => '<span>[</span>',
